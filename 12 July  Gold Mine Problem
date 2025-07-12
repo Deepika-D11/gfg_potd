@@ -1,0 +1,28 @@
+// code
+class Solution {
+    public int maxGold(int[][] mat) {
+        // code here
+        int a = mat.length;
+        int b = mat[0].length;
+        
+        for(int j = a - 2 ;j>=0 ; j--){
+            for(int i = 0; i<b ; i++ ){
+                int maxGold = mat[i][j+1];
+                if(i>0){
+                    maxGold = Math.max(maxGold,mat[i-1][j+1]);
+                }
+                if(i<b-1){
+                    maxGold = Math.max(maxGold,mat[i+1][j+1]);
+                
+                }
+                mat[i][j] += maxGold;
+            }
+        }
+        int maxGoldCol = Integer.MIN_VALUE;
+        for(int i= 0 ;i<b ; i++){
+            maxGoldCol = Math.max(maxGoldCol,mat[i][0]);
+            
+        }
+        return maxGoldCol ;
+    }
+}
