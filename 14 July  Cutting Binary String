@@ -1,0 +1,43 @@
+import java.util.*;
+
+class Solution {
+    public int cuts(String s) {
+        int n = s.length();
+        Integer[] dp = new Integer[n];
+        int result = dfs(s, 0, dp);
+        return result == Integer.MAX_VALUE ? -1 : result;
+    }
+
+    private int dfs(String s, int i, Integer[] dp) {
+        if (i == s.length()) return 0;
+        if (dp[i] != null) return dp[i];
+
+        int minCuts = Integer.MAX_VALUE;
+        for (int j = i; j < s.length(); j++) {
+            String substr = s.substring(i, j + 1);
+            if (isValidPowerOf5(substr)) {
+                int next = dfs(s, j + 1, dp);
+                if (next != Integer.MAX_VALUE) {
+                    minCuts = Math.min(minCuts, 1 + next);
+                }
+            }
+        }
+
+        dp[i] = minCuts;
+        return dp[i];
+    }
+
+    private boolean isValidPowerOf5(String binary) {
+        if (binary.charAt(0) == '0') return false;
+        int num = Integer.parseInt(binary, 2);
+        return isPowerOf5(num);
+    }
+
+    private boolean isPowerOf5(int n) {
+        if (n == 0) return false;
+        while (n % 5 == 0) {
+            n /= 5;
+        }
+        return n == 1;
+    }
+}
