@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Solution {
+    public int maxKPower(int n, int k) {
+        Map<Integer, Integer> primeFactors = new HashMap<>();
+        int temp = k;
+        for (int i = 2; i * i <= temp; i++) {
+            while (k % i == 0) {
+                primeFactors.put(i, primeFactors.getOrDefault(i, 0) + 1);
+                k /= i;
+            }
+        }
+        if (k > 1) {
+            primeFactors.put(k, primeFactors.getOrDefault(k, 0) + 1);
+        }
+
+        int result = Integer.MAX_VALUE;
+        for (Map.Entry<Integer, Integer> entry : primeFactors.entrySet()) {
+            int prime = entry.getKey();
+            int exponent = entry.getValue();
+
+            int count = 0, m = n;
+            while (m > 0) {
+                count += m / prime;
+                m /= prime;
+            }
+
+            result = Math.min(result, count / exponent);
+        }
+
+        return result;
+    }
+}
