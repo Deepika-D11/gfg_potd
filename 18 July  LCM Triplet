@@ -1,0 +1,19 @@
+class Solution {
+    int lcmTriplets(int n) {
+        if (n <= 2) return n;
+
+        long maxLCM = 0;
+
+        if (n % 2 != 0) {
+            maxLCM = 1L * n * (n - 1) * (n - 2);
+        } else {
+            if (n % 3 != 0) {
+                maxLCM = 1L * n * (n - 1) * (n - 3);
+            } else {
+                maxLCM = 1L * (n - 1) * (n - 2) * (n - 3);
+            }
+        }
+
+        return (int) maxLCM;
+    }
+}
